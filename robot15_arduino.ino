@@ -5,20 +5,92 @@ Works in cooperation with RasperryPi.
 by Anna Jõgi a.k.a Libahunt
 
 *******************************************************************************/
+#include <NewPing.h>
+#include <AccelStepper.h>
 
-
-#define DEBUG /*comment this line out in production then all Serial instructsions are ignored*/
+#define DEBUG /*comment this line out in production then all DP Serial instructsions are ignored*/
 #include "DebugUtils.h"/*leave this in, otherwise you get errors*/
-
 
 #include "Layout.h" //Pin connections
 #include "Settings.h" //Variables that might need tweaking
 #include "Vars.h"
 
+AccelStepper motorRight(8, motorR[0], motorR[2], motorR[1], motorR[3]);//8 is type
+AccelStepper motorLeft(8, motorL[0], motorL[2], motorL[1], motorL[3]);//order of pins 1,3,2,4
+
+NewPing sonar[sonarsNum] = {
+  NewPing(sensorRight, sensorRight, pingMaxDist),
+  NewPing(sensorFront, sensorFront, pingMaxDist),
+  NewPing(sensorLeft, sensorLeft, pingMaxDist)
+};
+
+
+
 void setup() {
+    
+  Serial.begin(9600);//for communication with RasPi
+  
+  //Stepper motors setup for exploration mode
+  motorRight.setAcceleration(motorAccelerationExplore);
+  motorRight.setMaxSpeed(motorSpeedExplore);
+  motorLeft.setAcceleration(motorAccelerationExplore);
+  motorLeft.setMaxSpeed(motorSpeedExplore);
+  
+  state = WAIT_COMMAND;
+  commands = 0;
+  
+  Serial.println('d');
   
 }
 
 void loop() {
   
+  if (state == WAIT_COMMAND) {
+     	
+    commands = takeOrders();
+    if (commands > 0) {//serial command received
+      currentCommand = 0;
+      state = DRIVE_BY_COMMAND;
+    }
+    
+  }
+  
+  else if (state == DRIVE_BY_COMMAND) {
+    
+    runningRight = motorRight.run();//runs if still distance to go, saves state in var, false if moving done  
+    runningLeft = motorLeft.run();
+    
+    if (!runningRight && !runningLeft) {//run command executed
+      if (currentCommand < commands) {
+        execCommand( incomingCommand[currentCommand] );
+        currentCommand++; 
+      }
+      else {
+        //command executed, report back and change state
+        stopMovement();
+        Serial.println('d');
+        commands = 0;
+        currentCommand = 0;
+        state = WAIT_COMMAND;
+      }
+    }
+     
+    pingAll();
+    
+  }
+  
+  else if (state == EXPLORE) {
+    
+    runningRight = motorRight.run();//runs if still distance to go, saves state in var, false if moving done
+    runningLeft = motorLeft.run();
+    //pingAll();
+    
+    //TODO: in sersor analyse stop if wall too close,
+    //register doors
+    //correct distance
+    
+  }
+
 }
+
+
