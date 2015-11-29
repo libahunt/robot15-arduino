@@ -7,17 +7,27 @@ e: explore mode drive forward*/
 
 void execCommand(char commandChar) {
   if(commandChar =='r') {
+    DPL("B: turning right");
     turnRight();
   } 
   else if(commandChar =='l') {
+    DPL("B: turning left");
     turnLeft();
   }
-  else if (commandChar-'0' <=9 && commandChar-'0' >=0) {
+  else if (commandChar-'0' <=9 && commandChar-'0' >0) {
+    DP("B: moving ");
+    DP(commandChar - '0');
+    DPL(" squares");
     moveForward((commandChar-'0')*squareSize);
   }
   
   else if(commandChar == 'e') {
-    //TODO insert drive command
+    DPL("B: exploring");
+    cleanExploreResults();
+    currentExploreAddress = 0;
+    nextSquareCentre = motorLeft.currentPosition() + (squareSize*cmSteps);
+    moveForward(mazeSize);//maximum length, will be stopped by measurement of wall
+    stopCorrection = true;
     state = EXPLORE; //change state
   }
   
@@ -31,3 +41,28 @@ void execCommand(char commandChar) {
   }
 }
 
+void mapSquareWalls() {
+  //record if walls are open
+  if(sonarReadings[0] < 6) {//right open
+    exploreResults[currentExploreAddress] += 4;
+  } 
+  if(sonarReadings[3] < 6) {//left open
+    exploreResults[currentExploreAddress] += 1;
+  }
+  if(sonarReadings[1] < 10) {//front open
+    exploreResults[currentExploreAddress] += 2;
+  }
+  else {//front not open
+    //at the end of the straight drive, report back
+    //reportBack();
+  }
+  //set new checkpoint
+  nextSquareCentre = motorLeft.currentPosition() + (squareSize*cmSteps);
+  currentExploreAddress++;
+}
+
+void cleanExploreResults() {
+  for (int i; i<mazeSize; i++) {
+    exploreResults[i] = 0;
+  }
+}

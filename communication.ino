@@ -9,7 +9,9 @@ ardu-> pi
 d: done fulfilling drive commands
 [number]: explored square properties in binary, 
     DEC 1-open to left, 2 open to front, 4 open to right, 
-    example 6 means open forward and right, 0 means dead end all sides closed 
+    example 6 means open forward and right, 5 means open left and right, 4 means open right,
+    3 means open front and left, 2 means open to front, 1 means open to left,
+    0 means dead end all sides closed 
     
 B: line starting with B indicates debug printout
 */
@@ -31,6 +33,10 @@ byte takeOrders() {
 }
 
 void reportBack() {
-  
+  for (int i=0; i<=currentExploreAddress; i++) {
+    Serial.print(exploreResults[i]);
+  }
+  Serial.println("d");
+  state = WAIT_COMMAND;
 }
 

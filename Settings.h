@@ -8,11 +8,14 @@ const float motorAccelerationRun = 750;
 const float motorSpeedExplore = 1200;
 const float motorSpeedRun = 1200;
 
+/*Maneuvers related*/
 const long cmSteps = 272;//number of motor steps that yield 1 cm move forward
 const long turnSteps = 6.28*cmSteps;//number of motor steps that yield 90 degree turn
-const long correctionStepsTurn = cmSteps * 1.25;
-const long correctionStepsStraight = cmSteps / 1.25;
+/*const long correctionStepsTurn = cmSteps * 1.25;
+const long correctionStepsStraight = cmSteps / 1.25;*/
 
-const float squareSize = 18.0;
+const float squareSize = 18.0;//square length in cm
+const byte mazeSize = 16;//number of squares in a row
+const float frontWallDist = 2.5;//measured distance to front wall when robot is centered in the square
 
 const byte commandLength = 20;//max length of command taken from raspi

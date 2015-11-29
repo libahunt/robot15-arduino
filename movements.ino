@@ -1,5 +1,5 @@
-/*right motor: forward is clockwise
-left motor: forward is counterclockwise*/
+/*right motor: forward is negative
+left motor: forward is positive*/
 
 void moveForward(float cm) {
   long steps = long(cm*cmSteps);
@@ -31,9 +31,9 @@ void stopMovement() {
   motorLeft.disableOutputs();
 }
 
-void correctToRight() {
-  long targetLeft = motorLeft.targetPosition();
-  long targetRight = motorRight.targetPosition(); 	
+/*void correctToRight() {
+  targetLeft = motorLeft.targetPosition();
+  targetRight = motorRight.targetPosition(); 	
   motorLeft.stop();
   motorRight.stop();
   motorLeft.move(-1*correctionStepsTurn);
@@ -50,8 +50,8 @@ void correctToRight() {
 }
 
 void correctToLeft() {
-  long targetLeft = motorLeft.targetPosition();
-  long targetRight = motorRight.targetPosition(); 	
+  targetLeft = motorLeft.targetPosition();
+  targetRight = motorRight.targetPosition(); 	
   motorLeft.stop();
   motorRight.stop();
   motorRight.move(correctionStepsTurn);
@@ -65,4 +65,4 @@ void correctToLeft() {
   }
   motorRight.moveTo(targetRight);
   motorLeft.moveTo(targetLeft);
-}
+}*/

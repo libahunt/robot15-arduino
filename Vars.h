@@ -17,8 +17,20 @@ byte commandIndex;//helper during receiving
 byte commands;//holds the number of commands that was received into incomingCommand
 byte currentCommand;//counter for keeping track of drive command that is executed right now
 
+byte currentExploreAddress = 0;//index of square currently explored
+byte exploreResults[mazeSize];//binary mappings of squares that will be sent to RasPi
+long nextSquareCentre;//holds left motor step number that occurs in the middle of next square
+
+
+/*Maneuvers related*/
 boolean runningRight = false;
 boolean runningLeft = false;
+long rightPos;//to save AccelStepper currentPosition() for later use 	
+long leftPos;
+long targetLeft; //to save AccelStepper targetPosition() for later use
+long targetRight; 
+
+boolean stopCorrection = true;	
 
 /*
 #define TWO_WALLS 0

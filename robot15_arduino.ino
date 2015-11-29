@@ -57,16 +57,18 @@ void loop() {
   
   else if (state == DRIVE_BY_COMMAND) {
     
+    //check if motor stepping is due
     runningRight = motorRight.run();//runs if still distance to go, saves state in var, false if moving done  
     runningLeft = motorLeft.run();
     
-    if (!runningRight && !runningLeft) {//run command executed
+    //single run command has finished executing
+    if (!runningRight && !runningLeft) {
       if (currentCommand < commands) {
         execCommand( incomingCommand[currentCommand] );
         currentCommand++; 
       }
       else {
-        //command executed, report back and change state
+        //all commands executed, report back and change state
         stopMovement();
         Serial.println('d');
         commands = 0;
@@ -75,19 +77,30 @@ void loop() {
       }
     }
      
+    //check if sensor read is due 
     pingAll();
     
   }
   
   else if (state == EXPLORE) {
     
+    //check if motor stepping is due
     runningRight = motorRight.run();//runs if still distance to go, saves state in var, false if moving done
     runningLeft = motorLeft.run();
-    //pingAll();
     
-    //TODO: in sersor analyse stop if wall too close,
-    //register doors
-    //correct distance
+    //check if sensor read is due 
+    pingAll();
+    
+    //check if in the middle of a square
+    if (motorLeft.currentPosition() == nextSquareCentre) {
+      mapSquareWalls();
+    }
+    
+    //has finished executing
+    if (!runningRight && !runningLeft) {
+      reportBack();
+      state = WAIT_COMMAND;
+    }
     
   }
 
