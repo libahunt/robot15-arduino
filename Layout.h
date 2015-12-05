@@ -1,5 +1,5 @@
-const byte motorR[4] = {4, 5, 6, 7};
-const byte motorL[4] = {8, 9, 10, 11};
+const byte motorR[4] = {7, 6, 5, 4};
+const byte motorL[4] = {11, 10, 9, 8};
 
 const byte sensorRight = 15;
 const byte sensorFront = 14;
