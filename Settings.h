@@ -5,8 +5,8 @@ const unsigned long pingInterval = 33;
 /*Stepper motors related*/
 const float motorAccelerationExplore = 750;
 const float motorAccelerationRun = 750;
-const float motorSpeedExplore = 1500;
-const float motorSpeedRun = 1500;
+const float motorSpeedExplore = 1200;
+const float motorSpeedRun = 1200;
 
 /*Wall detection related*/
 const unsigned long isFrontWallMax = 60;
