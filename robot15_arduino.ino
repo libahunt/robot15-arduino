@@ -39,7 +39,7 @@ void setup() {
   state = WAIT_COMMAND;
   commands = 0;
   
-  Serial.println('d');
+  Serial.println('Ready');
   
 }
 
