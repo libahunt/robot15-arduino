@@ -7,7 +7,7 @@ byte state;
 /*ping sensors related*/
 const byte sonarsNum = 3;
 unsigned long pingTimer[sonarsNum];
-unsigned int sonarReadings[sonarsNum];
+unsigned long sonarReadings[sonarsNum];
 uint8_t currentSensor = 0;
 
 /*Serial communication related*/

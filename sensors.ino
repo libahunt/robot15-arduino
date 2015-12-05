@@ -24,29 +24,27 @@ void pingAll() {
 
 void echoCheck() {
   if (sonar[currentSensor].check_timer())
-    sonarReadings[currentSensor] = sonar[currentSensor].ping_result / US_ROUNDTRIP_CM;
+    sonarReadings[currentSensor] = sonar[currentSensor].ping_result * 0.34;
 }
 
 void sensorAnalyze() { // Sensor ping cycle complete, analyze results
 
   //check if front wall too close
-  if (sonarReadings[1] <= 6 && sonarReadings[1] > 0 && state == EXPLORE) {//TODO: this condition is problematic!
+  if (sonarReadings[1] <= isFrontWallMax && sonarReadings[1] > isFrontWallMin && state == EXPLORE) {//TODO: this condition is problematic!
     DP("B: front wall closing ");
     DPL(sonarReadings[1]);
     rightPos = motorRight.currentPosition();
     leftPos = motorLeft.currentPosition();
-    motorRight.moveTo( rightPos - (sonarReadings[1]*cmSteps) );
-    motorLeft.moveTo( leftPos + (sonarReadings[1]*cmSteps) );
+    motorRight.moveTo( rightPos - (sonarReadings[1]/10 * cmSteps) );
+    motorLeft.moveTo( leftPos + (sonarReadings[1]/10 * cmSteps) );
   }
   
-  /*TODO drive by wall corrections
   else if (sonarReadings[0] < sonarReadings[3]*1.3) {
     correctToLeft();
   }
   else if (sonarReadings[3] < sonarReadings[0]*1.3) {
     correctToRight();
-  }*/
+  }
   
 }
-
 

@@ -42,19 +42,15 @@ void execCommand(char commandChar) {
 }
 
 void mapSquareWalls() {
-  //record if walls are open
-  if(sonarReadings[0] < 6) {//right open
+  //record if walls are open, sensors say 0 if reading out of range, so exclude too small also
+  if(sonarReadings[0] < isWallMin || sonarReadings[0] > isWallMax) {//right open
     exploreResults[currentExploreAddress] += 4;
   } 
-  if(sonarReadings[3] < 6) {//left open
+  if(sonarReadings[3] < isWallMin || sonarReadings[3] > isWallMax) {//left open
     exploreResults[currentExploreAddress] += 1;
   }
-  if(sonarReadings[1] < 10) {//front open
+  if(sonarReadings[1] < isWallMin || sonarReadings[1] > squareSize) {//front open
     exploreResults[currentExploreAddress] += 2;
-  }
-  else {//front not open
-    //at the end of the straight drive, report back
-    //reportBack();
   }
   //set new checkpoint
   nextSquareCentre = motorLeft.currentPosition() + (squareSize*cmSteps);

@@ -25,8 +25,8 @@ A0 - Ping sensor front
 A1 - Ping sensor right
 A2  - Ping sensor left
 A3 -
-A4 - I2C compass
-A5 - I2C compass
+A4
+A5 
 A6
 A7
 
