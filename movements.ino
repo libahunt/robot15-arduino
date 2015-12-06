@@ -13,15 +13,15 @@ void moveForward(float cm) {
 void turnLeft() {
   motorRight.enableOutputs();
   motorLeft.enableOutputs();
-  motorRight.move(-1*turnSteps);
-  motorLeft.move(-1*turnSteps);
+  motorRight.move(turnSteps);
+  motorLeft.move(turnSteps);
 }
 
 void turnRight() {
   motorRight.enableOutputs();
   motorLeft.enableOutputs();
-  motorRight.move(turnSteps);
-  motorLeft.move(turnSteps);
+  motorRight.move(-1*turnSteps);
+  motorLeft.move(-1*turnSteps);
 }
 
 void stopMovement() {

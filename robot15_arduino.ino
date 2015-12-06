@@ -15,8 +15,8 @@ by Anna Jõgi a.k.a Libahunt
 #include "Settings.h" //Variables that might need tweaking
 #include "Vars.h"
 
-AccelStepper motorLeft(8, motorR[0], motorR[2], motorR[1], motorR[3]);//8 is type
-AccelStepper motorRight(8, motorL[0], motorL[2], motorL[1], motorL[3]);//order of pins 1,3,2,4
+AccelStepper motorRight(8, motorR[0], motorR[2], motorR[1], motorR[3]);//8 is type
+AccelStepper motorLeft(8, motorL[0], motorL[2], motorL[1], motorL[3]);//order of pins 1,3,2,4
 
 NewPing sonar[sonarsNum] = {
   NewPing(sensorRight, sensorRight, pingMaxDist),
