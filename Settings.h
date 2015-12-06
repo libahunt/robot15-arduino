@@ -15,8 +15,8 @@ const unsigned long isWallMax = 50;
 const unsigned long isWallMin = 5;
 
 /*Maneuvers related*/
-const long cmSteps = 272;//number of motor steps that yield 1 cm move forward
-const long turnSteps = 6.28*cmSteps;//number of motor steps that yield 90 degree turn
+const long cmSteps = 178;//number of motor steps that yield 1 cm move forward
+const long turnSteps = 5.652*cmSteps;//number of motor steps that yield 90 degree turn
 
 const long correction1StepsTurn = 100;
 const long correctionStepsStraight = cmSteps;
