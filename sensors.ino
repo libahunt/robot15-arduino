@@ -39,12 +39,12 @@ void sensorAnalyze() { // Sensor ping cycle complete, analyze results
     motorLeft.moveTo( leftPos + (sonarReadings[1]/10 * cmSteps) );
   }
   
-  else if (sonarReadings[0] < sonarReadings[3]*1.3) {
+  /*else if (sonarReadings[0] < sonarReadings[3]*1.3) {
     correctToLeft();
   }
   else if (sonarReadings[3] < sonarReadings[0]*1.3) {
     correctToRight();
-  }
+  }*/
   
 }
 
